@@ -19,26 +19,74 @@ pre {
     word-wrap: break-word;
 }
 
-#currentResult {
-    font-weight: bold;
-    transition: all 0.3s ease;
+.card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: none;
+    border-radius: 12px;
 }
 
-#currentResult.good {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-#currentResult.bad {
-    background-color: #f8d7da;
-    color: #721c24;
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding: 1rem 1.25rem;
+    font-weight: 600;
+    border-radius: 12px 12px 0 0 !important;
 }
 
 .card-body {
-    background-color: #f8f9fa;
+    background-color: white;
+    border-radius: 0 0 12px 12px;
 }
 
 #gregorianDate, #lunarDate {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     margin: 0.5rem 0;
+    color: #495057;
+}
+
+#currentHour {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+#currentResult {
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 3rem;
+    padding: 1.5rem !important;
+    margin: 1rem 0;
+    border-radius: 12px;
+}
+
+#currentResult.good {
+    background-color: #ebf9f0;
+    color: #0a6c2b;
+    box-shadow: 0 2px 8px rgba(10, 108, 43, 0.1);
+}
+
+#currentResult.bad {
+    background-color: #fdf3f4;
+    color: #842029;
+    box-shadow: 0 2px 8px rgba(132, 32, 41, 0.1);
+}
+
+#resultDescription {
+    white-space: pre-line;
+    line-height: 2;
+    text-align: left;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    border-top: 1px solid #dee2e6;
+    color: #495057;
+}
+
+.description-item {
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.description-item:hover {
+    background-color: #f8f9fa;
 }

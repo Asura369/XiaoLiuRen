@@ -72,6 +72,65 @@ function getResultByLooping(month, day, hour) {
     return results[currentIndex];
 }
 
+// descriptions for each result
+const resultDescriptions = {
+    "大安": `问感情，安稳和谐
+            问工作，平稳安定
+            问事业，不易冒进，易于守成。
+            问股票，没有太大浮动问学习，学习成绩平稳。
+            问身体，身体平安
+            问家庭，家庭和睦
+            问疾病，病灶在肝胃，或为眼疾
+            问运势，易安稳，易正财，不易买彩票股票等偏财。`,
+
+    "留连": `问感情，感情有波动，或过于平淡
+            问工作，容易出现小人
+            问事业，不易进，以守为主
+            问股票，跌的可能性大，不过不会大跌
+            问学习，与上次成绩差不多
+            问身体，注意湿病
+            问家庭，家里有难事。或为财上有困难
+            问疾病，病灶在阴湿，或为阴虚阳亏
+            问运势，可能有陷阱要诱惑你，一定要分辦清楚，不可轻易做决定`,
+
+    "速喜": `问感情，热恋，如胶似漆
+            问工作，有好事发生，鸿运当头
+            问事业，易进，速进，抓住机遇
+            问股票，大涨
+            问学习，会得到理想的成绩
+            问身体，注意精神上的疾病，如失眠，熬夜，还要注意上火
+            问家庭，如火如茶，风风火火，不着家
+            问疾病，病灶在头或心血管疾病，或流行性传染性疾病。烈性疾病
+            问运势，运势很好，把握机遇`,
+
+    "赤口": `问感情，吵架，冲动，容易分手
+            问工作，急躁，口舌之争
+            问事业，不是好时机，守进都不好，易退
+            问股票，大跌
+            问学习，不好，学生叛逆问身体，有疾病问家庭，经常吵架
+            问疾病，病灶在脑，肺，呼吸道，可能是烈性疾病问运势，运势差，犯小人`,
+
+    "小吉": `问感情，感情和谐，有小惊喜
+            问工作，顺风顺水
+            问事业，得到回报
+            问股票，小涨
+            问学习，得到心里满意的成绩
+            问身体，无病
+            问家庭，家庭和睦吉祥
+            问疾病，无病，或病快好了
+            问运势，吉利，逢凶化吉，吉祥`,
+
+    "空亡": `问感情，感情平淡，或两人直接没有感情
+            问工作，没有工作，或无意义的工作
+            问事业，易退，不易进或守
+            问股票，大跌
+            问学习，成绩意外的不理想
+            问身体，身体虚弱
+            问家庭，可能要分家，或没有家庭
+            问疾病，没有疾病，或不治之症，如癌症
+            问运势，诸事不吉`
+};
+
 // Main function to display results
 function showResult() {
     const today = moment();
@@ -102,6 +161,15 @@ function showResult() {
     document.getElementById('currentHour').innerHTML =
         `${getLunarHourName(currentHour)} (${getTimeRange(currentHour)})`;
     document.getElementById('currentResult').innerHTML = result;
+
+    // Update the description display in showResult function
+    const description = resultDescriptions[result]
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line)
+        .map(line => `<div class="description-item">${line}</div>`)
+        .join('');
+    document.getElementById('resultDescription').innerHTML = description;
 
     // Apply styling based on result type (good/bad)
     const currentResult = document.getElementById('currentResult');

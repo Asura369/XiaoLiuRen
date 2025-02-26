@@ -41,37 +41,6 @@ function getTimeRange(hourIndex) {
     return timeRanges[hourIndex];
 }
 
-// Calculates the 六壬 result based on lunar month, day, and hour
-function getResultByLooping(month, day, hour) {
-    const results = {
-        1: "大安",
-        2: "留连",
-        3: "速喜",
-        4: "赤口",
-        5: "小吉",
-        6: "空亡"
-    };
-
-    // First calculate month index (1-6)
-    let currentIndex = month % 6;
-    currentIndex = currentIndex === 0 ? 6 : currentIndex; // If remainder is 0, use 6
-    console.log("Month Index:", currentIndex);
-
-    // Add days and recalculate index (1-6)
-    currentIndex += day;
-    currentIndex = ((currentIndex - 1) % 6);
-    currentIndex = currentIndex === 0 ? 6 : currentIndex; // If remainder is 0, use 6
-    console.log("Day Index:", currentIndex);
-
-    // Add hours and get final index (1-6)
-    currentIndex += hour;
-    currentIndex = ((currentIndex - 1) % 6);
-    currentIndex = currentIndex === 0 ? 6 : currentIndex; // If remainder is 0, use 6
-    console.log("Hour Index:", currentIndex);
-
-    return results[currentIndex];
-}
-
 // descriptions for each result
 const resultDescriptions = {
     "大安": `问感情，安稳和谐
@@ -154,15 +123,28 @@ function showResult() {
     document.getElementById('lunarDate').innerHTML =
         `农历：${lunarMonths[month-1]} ${lunarDays[day-1]} ${getLunarHourName(currentHour)}`;
 
-    // Get result using the traditional looping method
-    const result = getResultByLooping(month, day, currentHour);
+    // Calculate result using the formula method
+    const calculation = (month + day + currentHour - 2) % 6;
+    const resultIndex = calculation === 0 ? 6 : calculation; // If remainder is 0, use 6
+    console.log("Result Index:", resultIndex);
+
+    const results = {
+        1: "大安",
+        2: "留连",
+        3: "速喜",
+        4: "赤口",
+        5: "小吉",
+        6: "空亡"
+    };
+    const result = results[resultIndex];
+    console.log("Result:", result);
 
     // Update current hour display
     document.getElementById('currentHour').innerHTML =
         `${getLunarHourName(currentHour)} (${getTimeRange(currentHour)})`;
     document.getElementById('currentResult').innerHTML = result;
 
-    // Update the description display in showResult function
+    // Update the description display
     const description = resultDescriptions[result]
         .split('\n')
         .map(line => line.trim())
@@ -173,17 +155,8 @@ function showResult() {
 
     // Apply styling based on result type (good/bad)
     const currentResult = document.getElementById('currentResult');
-    currentResult.className = 'display-4 py-3 rounded';
-    const resultTypes = {
-        1: "大安",   // Good
-        2: "留连",   // Bad
-        3: "速喜",   // Good
-        4: "赤口",   // Bad
-        5: "小吉",   // Good
-        6: "空亡"    // Bad
-    };
-    const resultIndex = Object.entries(resultTypes).find(([_, value]) => value === result)[0];
-    currentResult.classList.add([1, 3, 5].includes(Number(resultIndex)) ? 'good' : 'bad');
+    currentResult.className = 'py-3 rounded';
+    currentResult.classList.add([1, 3, 5].includes(resultIndex) ? 'good' : 'bad');
 }
 
 // Update display every minute

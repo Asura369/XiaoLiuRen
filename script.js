@@ -1,7 +1,18 @@
+function setTodayLunar() {
+    const today = moment();
+    const lunar = today.lunar();
+
+    // Add 1 to month since moment-lunar months are 0-based
+    document.getElementById('month').value = lunar.month() + 1;
+    document.getElementById('day').value = lunar.date();
+
+    // Trigger calculation after setting the date
+    showResult();
+}
 
 function showResult() {
     resultList = ["大安", "留连", "速喜", "赤口", "小吉", "空亡", "大安", "留连", "速喜", "赤口", "小吉", "空亡", "大安", "留连", "速喜", "赤口", "小吉", "空亡", "大安", "留连", "速喜", "赤口", "小吉", "空亡", "大安", "留连", "速喜", "赤口", "小吉", "空亡", "大安", "留连", "速喜", "赤口", "小吉", "空亡", "大安", "留连", "速喜", "赤口", "小吉", "空亡", "大安", "留连", "速喜", "赤口", "小吉", "空亡", "大安", "留连", "速喜", "赤口", "小吉", "空亡"]
-    
+
     month = document.getElementById('month').value
     day = document.getElementById('day').value
 
@@ -9,7 +20,7 @@ function showResult() {
     resultList = resultList.slice(day - 1)
 
     for (let i = 1; i <= 12; i++) {
-        document.getElementById('row' + i).setAttribute('class', '')  
+        document.getElementById('row' + i).setAttribute('class', '')
     }
 
     for (let i = 1; i <= 12; i++) {
@@ -37,5 +48,4 @@ function showResult() {
         }
     }
 
-    
 }

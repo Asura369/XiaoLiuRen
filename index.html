@@ -18,70 +18,15 @@
     <div class="card m-4">
         <h5 class="card-header">小六壬占卜</h5>
         <div class="card-body">
+            <div id="gregorianDate"></div>
             <div id="lunarDate"></div>
         </div>
     </div>
     <div class="card m-4">
         <h5 class="card-header">时运</h5>
-        <div class="card-body">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">时辰</th>
-                        <th scope="col">卦名</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr id="row1">
-                        <th scope="row">子时 (23:00 ~ 00:59)</th>
-                        <td id="result1"></td>
-                    </tr>
-                    <tr id="row2">
-                        <th scope="row">丑时 (1:00 ~ 2:59)</th>
-                        <td id="result2"></td>
-                    </tr>
-                    <tr id="row3">
-                        <th scope="row">寅时 (3:00 ~ 4:59)</th>
-                        <td id="result3"></td>
-                    </tr>
-                    <tr id="row4">
-                        <th scope="row">卯时 (5:00 ~ 6:59)</th>
-                        <td id="result4"></td>
-                    </tr>
-                    <tr id="row5">
-                        <th scope="row">辰时 (7:00 ~ 8:59)</th>
-                        <td id="result5"></td>
-                    </tr>
-                    <tr id="row6">
-                        <th scope="row">巳时 (9:00 ~ 10:59)</th>
-                        <td id="result6"></td>
-                    </tr>
-                    <tr id="row7">
-                        <th scope="row">午时 (11:00 ~ 12:59)</th>
-                        <td id="result7"></td>
-                    </tr>
-                    <tr id="row8">
-                        <th scope="row">未时 (13:00 ~ 14:59)</th>
-                        <td id="result8"></td>
-                    </tr>
-                    <tr id="row9">
-                        <th scope="row">申时 (15:00 ~ 16:59)</th>
-                        <td id="result9"></td>
-                    </tr>
-                    <tr id="row10">
-                        <th scope="row">酉时 (17:00 ~ 18:59)</th>
-                        <td id="result10"></td>
-                    </tr>
-                    <tr id="row11">
-                        <th scope="row">戌时 (19:00 ~ 20:59)</th>
-                        <td id="result11"></td>
-                    </tr>
-                    <tr id="row12">
-                        <th scope="row">亥时 (21:00 ~ 22:59)</th>
-                        <td id="result12"></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="card-body text-center">
+            <div id="currentHour" class="h4 mb-3"></div>
+            <div id="currentResult" class="display-4 py-3 rounded"></div>
         </div>
     </div>
 </body>

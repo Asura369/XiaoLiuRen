@@ -1,3 +1,4 @@
+// Maps current hour to traditional Chinese 时辰 (1-12)
 function getCurrentLunarHour() {
     const hour = new Date().getHours();
     // Map hours to 时辰 (1-12)
@@ -15,11 +16,13 @@ function getCurrentLunarHour() {
     return 12; // 亥时 21:00-22:59
 }
 
+// Converts 时辰 number to Chinese character with 时 suffix
 function getLunarHourName(index) {
     const lunarHours = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"];
     return lunarHours[index - 1] + "时";
 }
 
+// Returns the time range for a given 时辰
 function getTimeRange(hourIndex) {
     const timeRanges = {
         1: "23:00-00:59",
@@ -38,18 +41,53 @@ function getTimeRange(hourIndex) {
     return timeRanges[hourIndex];
 }
 
+// Calculates the 六壬 result based on lunar month, day, and hour
+function getResultByLooping(month, day, hour) {
+    const results = {
+        1: "大安",
+        2: "留连",
+        3: "速喜",
+        4: "赤口",
+        5: "小吉",
+        6: "空亡"
+    };
+
+    // First calculate month index (1-6)
+    let currentIndex = month % 6;
+    currentIndex = currentIndex === 0 ? 6 : currentIndex; // If remainder is 0, use 6
+    console.log("Month Index:", currentIndex);
+
+    // Add days and recalculate index (1-6)
+    currentIndex += day;
+    currentIndex = ((currentIndex - 1) % 6);
+    currentIndex = currentIndex === 0 ? 6 : currentIndex; // If remainder is 0, use 6
+    console.log("Day Index:", currentIndex);
+
+    // Add hours and get final index (1-6)
+    currentIndex += hour;
+    currentIndex = ((currentIndex - 1) % 6);
+    currentIndex = currentIndex === 0 ? 6 : currentIndex; // If remainder is 0, use 6
+    console.log("Hour Index:", currentIndex);
+
+    return results[currentIndex];
+}
+
+// Main function to display results
 function showResult() {
     const today = moment();
     const lunar = today.lunar();
-    const month = lunar.month() + 1;
+    const month = lunar.month() + 1; // Add 1 since moment-lunar months are 0-based
+    console.log("month:", month);
     const day = lunar.date();
+    console.log("day:", day);
     const currentHour = getCurrentLunarHour();
+    console.log("currentHour:", currentHour);
 
-    // Display current Gregorian date
+    // Display Gregorian date with time
     document.getElementById('gregorianDate').innerHTML =
         `公历：${moment().format('YYYY年MM月DD日 HH:mm')}`;
 
-    // Display current lunar date and hour
+    // Display lunar date with 时辰
     const lunarMonths = ["正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "冬月", "腊月"];
     const lunarDays = ["初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
                       "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十",
@@ -57,26 +95,31 @@ function showResult() {
     document.getElementById('lunarDate').innerHTML =
         `农历：${lunarMonths[month-1]} ${lunarDays[day-1]} ${getLunarHourName(currentHour)}`;
 
-    // Calculate result
-    const calculation = (month + day + currentHour - 2) % 6;
-    const resultIndex = calculation === 0 ? 6 : calculation;
-
-    const results = ["大安", "留连", "速喜", "赤口", "小吉", "空亡"];
-    const result = results[resultIndex - 1];
+    // Get result using the traditional looping method
+    const result = getResultByLooping(month, day, currentHour);
 
     // Update current hour display
     document.getElementById('currentHour').innerHTML =
         `${getLunarHourName(currentHour)} (${getTimeRange(currentHour)})`;
     document.getElementById('currentResult').innerHTML = result;
 
-    // Set result color based on type
+    // Apply styling based on result type (good/bad)
     const currentResult = document.getElementById('currentResult');
     currentResult.className = 'display-4 py-3 rounded';
-    currentResult.classList.add([1, 3, 5].includes(resultIndex) ? 'good' : 'bad');
+    const resultTypes = {
+        1: "大安",   // Good
+        2: "留连",   // Bad
+        3: "速喜",   // Good
+        4: "赤口",   // Bad
+        5: "小吉",   // Good
+        6: "空亡"    // Bad
+    };
+    const resultIndex = Object.entries(resultTypes).find(([_, value]) => value === result)[0];
+    currentResult.classList.add([1, 3, 5].includes(Number(resultIndex)) ? 'good' : 'bad');
 }
 
-// Update result every minute to keep time current
+// Update display every minute
 setInterval(showResult, 60000);
 
-// Call showResult when page loads
+// Initialize on page load
 window.onload = showResult;
